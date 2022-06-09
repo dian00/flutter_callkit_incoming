@@ -25,6 +25,8 @@ data class Data(val args: Map<String, Any?>) {
     var headers: HashMap<String, Any?> =
             (args["headers"] ?: HashMap<String, Any?>()) as HashMap<String, Any?>
     var from: String = ""
+    var textTitle: String = (args["textTitle"] as? String) ?: ""
+
 
     var isCustomNotification: Boolean = false
     var isShowLogo: Boolean = false
@@ -93,6 +95,10 @@ data class Data(val args: Map<String, Any?>) {
                 CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_IS_SHOW_LOGO,
                 isShowLogo
         )
+
+
+        bundle.putString(CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_TITLE, textTitle)
+
         bundle.putBoolean(
                 CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_IS_SHOW_CALLBACK,
                 isShowCallback
@@ -152,6 +158,8 @@ data class Data(val args: Map<String, Any?>) {
                     CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_IS_SHOW_LOGO,
                     false
             )
+
+            data.textTitle = bundle.getString(CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_TITLE, "")
             data.isShowCallback = bundle.getBoolean(
                     CallkitIncomingBroadcastReceiver.EXTRA_CALLKIT_IS_SHOW_CALLBACK,
                     true
